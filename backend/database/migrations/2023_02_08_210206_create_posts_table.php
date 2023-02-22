@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('image');
             $table->unsignedInteger('type')->default(1)->comment = '0:translate 1:create';
             $table->integer('view');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->char('status')->default('active');
             $table->unsignedInteger('is_done')->default(1)->comment = '0:undone 1:done';
             $table->string('slug')->unique();

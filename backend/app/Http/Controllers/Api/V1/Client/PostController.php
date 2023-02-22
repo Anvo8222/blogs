@@ -216,8 +216,28 @@ class PostController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroy($id)
+  public function destroy(Request $request, $id)
   {
-    //
+    $token = $request->bearerToken();
+    $user = UserModel::whereHas('session_users', function ($query) use ($token) {
+      $query->where('session_users.token', '=', $token);
+    })->first(["id"]);
+    $post = PostModel::where("id", $id)->where("user_id", $user->id)->first(['id', 'name', 'image']);
+    $postImage = $post->image;
+
+    $deletePost = $post->delete();
+    if ($deletePost > 0) {
+      $pathActive = public_path('upload/backend/posts');
+      if (file_exists($pathActive . "/" . $postImage)) {
+        unlink($pathActive . "/" . $postImage);
+      }
+      return response()->json([
+        'message' => "Xoá thành công!"
+      ], 201);
+    } else {
+      return response()->json([
+        'message' => "Xoá thất bại!"
+      ], 400);
+    }
   }
 }

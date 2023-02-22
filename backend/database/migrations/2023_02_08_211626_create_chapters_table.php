@@ -17,10 +17,9 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('chapter_number');
             $table->string('title');
-            $table->text('description');
             $table->char('status')->default('active');
             $table->longText('content');
-            $table->string('slug-chapter')->unique();
+            $table->string('slug_chapter')->unique();
             $table->unsignedBigInteger('post_id');
             $table->foreign('post_id')->references('id')->on('posts')->cascadeOnDelete();
             $table->timestamps();

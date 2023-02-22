@@ -36,6 +36,6 @@ class PostModel extends Model
     }
     public function chapters()
     {
-        return $this->hasMany(ChapterModel::class, 'post_id');
+        return $this->hasMany(ChapterModel::class, 'post_id', 'id');
     }
 }

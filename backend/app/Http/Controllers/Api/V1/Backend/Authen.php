@@ -7,6 +7,7 @@ use App\Models\V1\Backend\SessionUserModel;
 use App\Models\V1\Backend\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 
@@ -73,6 +74,7 @@ class Authen extends Controller
     $levelUser = UserModel::whereHas('session_users', function ($query) use ($token) {
       $query->where('session_users.token', '=', $token);
     })->first(['level']);
+
     if ($levelUser) {
       return response()->json([
         'level' => $levelUser->level,
