@@ -20,12 +20,14 @@ class PostFactory extends Factory
     {
         return [
             //
-            'name' => $this->faker->unique()->email,
-            'desription' => $this->faker->text,
+            'name' => $this->faker->name,
+            'author' => $this->faker->name,
+            'description' => $this->faker->text,
             'image' => $this->faker->imageUrl(640, 480),
             'status' => 'active',
-            'slug' => 'slug',
-            'user_id' => 1,
+            'slug' => $this->faker->name,
+            'view' => 0,
+            'user_id' => 2,
         ];
     }
 }

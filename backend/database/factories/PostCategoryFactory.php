@@ -20,9 +20,8 @@ class PostCategoryFactory extends Factory
     public function definition()
     {
         return [
-            //
             'category_id' => $this->faker->numberBetween($min = 1, $max = 8),
-            'post_id' => $this->faker->numberBetween($min = 3, $max = 61),
+            'post_id' => $this->faker->numberBetween($min = 3, $max = 105),
         ];
     }
 }

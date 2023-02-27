@@ -73,12 +73,22 @@ class Authen extends Controller
     $token = $request->bearerToken();
     $levelUser = UserModel::whereHas('session_users', function ($query) use ($token) {
       $query->where('session_users.token', '=', $token);
-    })->first(['level']);
+    })->first(['level', 'id']);
 
     if ($levelUser) {
-      return response()->json([
-        'level' => $levelUser->level,
-      ], 200);
+      $checkToken = SessionUserModel::where('user_id', $levelUser->id)->first();
+      if ($checkToken) {
+        if ($checkToken->token_expired > Carbon::now()) {
+          return response()->json([
+            'level' => $levelUser->level,
+          ], 200);
+        } else {
+          return response()->json([
+            'code' => 401,
+            'login_error' => 'Vui lòng đăng nhập lại!',
+          ], 401);
+        }
+      }
     } else {
       return response()->json([
         'error' => "Lỗi!",

@@ -38,4 +38,8 @@ class PostModel extends Model
     {
         return $this->hasMany(ChapterModel::class, 'post_id', 'id');
     }
+    public function comments()
+    {
+        return $this->hasMany(CommentModel::class, 'post_id', 'id');
+    }
 }

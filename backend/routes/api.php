@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\V1\Home\HomePostController;
+use App\Http\Controllers\Api\V1\Home\ViewPostController;
+
 use App\Http\Controllers\Api\V1\Backend\Authen;
 use App\Http\Controllers\Api\V1\Client\ClientAccountController;
 use App\Http\Controllers\Api\V1\Client\PostController;
@@ -28,6 +31,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get("/", function () {
     return view('welcome');
 });
+
+Route::get('/home/slider', [HomePostController::class, 'slider']);
+Route::get('/home/top', [HomePostController::class, 'top']);
+Route::get('/home/new', [HomePostController::class, 'new']);
+Route::get('/home/random', [HomePostController::class, 'random']);
+Route::get('/home/list', [HomePostController::class, 'list']);
+Route::get('/home/short-blog', [HomePostController::class, 'shortBlog']);
+
+Route::get('/detail/{slug}', [ViewPostController::class, 'viewDetailPost']);
+
 
 Route::post('/register', [ClientAccountController::class, 'register']);
 Route::get('/active-account/{id}/{token}', [ClientAccountController::class, 'active']);
@@ -57,7 +70,6 @@ Route::middleware([ClientAuthentication::class])->group(function () {
 
 // backend
 Route::get('category', [CategoryController::class, 'index']);
-
 Route::post('backend/admin/login', [Authen::class, 'loginAdmin']);
 Route::post('check/level/user', [Authen::class, 'checkLevelUser']);
 

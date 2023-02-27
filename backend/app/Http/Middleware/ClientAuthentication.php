@@ -29,9 +29,9 @@ class ClientAuthentication
           return $next($request);
         } else {
           return response()->json([
-            'status-code' => 401,
+            'status-code' => 403,
             'errors' => "Không có quyền truy cập!"
-          ], 401);
+          ], 403);
         }
       } else {
         return response()->json([
@@ -41,9 +41,9 @@ class ClientAuthentication
       }
     } else {
       return response()->json([
-        'status-code' => 401,
+        'status-code' => 403,
         'errors' => "Truy cập không hợp lệ!"
-      ], 401);
+      ], 403);
     }
   }
 }
